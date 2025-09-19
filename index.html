@@ -86,21 +86,14 @@
             opacity: 0.9;
         }
 
-        .tabs-container {
+        .tabs {
+            display: flex;
             background: #f8f9fa;
             border-bottom: 3px solid #e9ecef;
-        }
-
-        .tab-input {
-            display: none;
-        }
-
-        .tab-labels {
-            display: flex;
             overflow-x: auto;
         }
 
-        .tab-label {
+        .tab {
             background: transparent;
             border: none;
             padding: 15px 20px;
@@ -111,16 +104,14 @@
             transition: all 0.3s ease;
             border-bottom: 3px solid transparent;
             white-space: nowrap;
-            text-decoration: none;
-            display: block;
         }
 
-        .tab-label:hover {
+        .tab:hover {
             background: rgba(102, 126, 234, 0.1);
             color: #667eea;
         }
 
-        .tab-input:checked + .tab-label {
+        .tab.active {
             background: white;
             color: #1e3c72;
             border-bottom-color: #667eea;
@@ -133,16 +124,7 @@
             color: #333;
         }
 
-        #tab1:checked ~ .content-area .tab-content:nth-child(1),
-        #tab2:checked ~ .content-area .tab-content:nth-child(2),
-        #tab3:checked ~ .content-area .tab-content:nth-child(3),
-        #tab4:checked ~ .content-area .tab-content:nth-child(4),
-        #tab5:checked ~ .content-area .tab-content:nth-child(5),
-        #tab6:checked ~ .content-area .tab-content:nth-child(6),
-        #tab7:checked ~ .content-area .tab-content:nth-child(7),
-        #tab8:checked ~ .content-area .tab-content:nth-child(8),
-        #tab9:checked ~ .content-area .tab-content:nth-child(9),
-        #tab10:checked ~ .content-area .tab-content:nth-child(10) {
+        .tab-content.active {
             display: block;
         }
 
@@ -172,6 +154,10 @@
             margin: 15px 0;
             font-family: 'Courier New', monospace;
             overflow-x: auto;
+        }
+
+        .code-block code {
+            color: #d63384;
         }
 
         .alert {
@@ -314,136 +300,134 @@
             <p>Complete Pipeline Guide for FMO/IMO Financial Services Data</p>
         </div>
 
-        <div class="tabs-container">
-            <!-- Radio inputs for tab control -->
-            <input type="radio" id="tab1" name="tabs" class="tab-input" checked>
-            <label class="tab-label" for="tab1">Overview</label>
+        <div class="tabs">
+            <button class="tab active" onclick="showTab(event, 'overview')">Overview</button>
+            <button class="tab" onclick="showTab(event, 'report-basics')">Report Building</button>
+            <button class="tab" onclick="showTab(event, 'problem-reports')">Problem Detection</button>
+            <button class="tab" onclick="showTab(event, 'reports')">SF Reporting</button>
+            <button class="tab" onclick="showTab(event, 'duplicates')">Duplicate Detection</button>
+            <button class="tab" onclick="showTab(event, 'errors')">Error Research</button>
+            <button class="tab" onclick="showTab(event, 'csv-prep')">CSV Preparation</button>
+            <button class="tab" onclick="showTab(event, 'handoff')">Data Loader Handoff</button>
+            <button class="tab" onclick="showTab(event, 'common-issues')">Common Issues</button>
+            <button class="tab" onclick="showTab(event, 'resources')">Resources</button>
+        </div>
 
-            <input type="radio" id="tab2" name="tabs" class="tab-input">
-            <label class="tab-label" for="tab2">Report Building</label>
-
-            <input type="radio" id="tab3" name="tabs" class="tab-input">
-            <label class="tab-label" for="tab3">Problem Detection</label>
-
-            <input type="radio" id="tab4" name="tabs" class="tab-input">
-            <label class="tab-label" for="tab4">SF Reporting</label>
-
-            <input type="radio" id="tab5" name="tabs" class="tab-input">
-            <label class="tab-label" for="tab5">Duplicate Detection</label>
-
-            <input type="radio" id="tab6" name="tabs" class="tab-input">
-            <label class="tab-label" for="tab6">Error Research</label>
-
-            <input type="radio" id="tab7" name="tabs" class="tab-input">
-            <label class="tab-label" for="tab7">CSV Preparation</label>
-
-            <input type="radio" id="tab8" name="tabs" class="tab-input">
-            <label class="tab-label" for="tab8">Data Loader Handoff</label>
-
-            <input type="radio" id="tab9" name="tabs" class="tab-input">
-            <label class="tab-label" for="tab9">Common Issues</label>
-
-            <input type="radio" id="tab10" name="tabs" class="tab-input">
-            <label class="tab-label" for="tab10">Resources</label>
-
-            <!-- Content area with all tabs -->
-            <div class="content-area">
-                <!-- Tab 1: Overview -->
-                <div class="tab-content">
-                    <div class="section">
-                        <h2>Process Overview</h2>
-                        <p>Welcome to the comprehensive training guide for Salesforce data reconciliation. This process is designed to streamline data quality management for FMO/IMO clients uploading financial service provider information.</p>
-                        
-                        <div class="alert alert-info">
-                            <strong>Goal:</strong> Create a systematic process where Nextek's dev team handles initial data analysis and CSV preparation, while data admin performs final Data Loader uploads.
-                        </div>
-
-                        <h3>Pipeline Workflow</h3>
-                        <p><span class="step-number">1</span><strong>Salesforce Reporting:</strong> Run reports to identify data quality issues (save to "BI Specific" folder)</p>
-                        <p><span class="step-number">2</span><strong>Duplicate Detection:</strong> Use SF tools and custom SOQL queries to find duplicates</p>
-                        <p><span class="step-number">3</span><strong>Error Research:</strong> Investigate and categorize data inconsistencies using SOQL verification</p>
-                        <p><span class="step-number">4</span><strong>CSV Preparation:</strong> Build clean, upload-ready CSV files with SOQL validation</p>
-                        <p><span class="step-number">5</span><strong>Handoff:</strong> Package files for Data Loader upload with verification reports</p>
-
-                        <div class="alert alert-success">
-                            <strong>Key Nextek Requirements:</strong><br>
-                            📁 <strong>ALL reports must be saved to "BI Specific" folder in Salesforce</strong><br>
-                            🔍 <strong>Use SOQL queries to verify data accuracy at every step</strong><br>
-                            📋 <strong>Document all verification steps in handoff materials</strong>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <h2>Key Data Objects</h2>
-                        <div class="resource-card">
-                            <h4>Person Accounts</h4>
-                            <p>Individual agents, brokers, and producers with licensing and contact information</p>
-                        </div>
-                        <div class="resource-card">
-                            <h4>Accounts (Business)</h4>
-                            <p>Agencies, brokerages, and carrier relationships</p>
-                        </div>
-                        <div class="resource-card">
-                            <h4>Contacts</h4>
-                            <p>Support staff and administrative contacts</p>
-                        </div>
-                        <div class="resource-card">
-                            <h4>Custom Objects</h4>
-                            <p>Licensing, commissions, and product appointments</p>
-                        </div>
-                    </div>
+        <div id="overview" class="tab-content active">
+            <div class="section">
+                <h2>Process Overview</h2>
+                <p>Welcome to the comprehensive training guide for Salesforce data reconciliation. This process is designed to streamline data quality management for FMO/IMO clients uploading financial service provider information.</p>
+                
+                <div class="alert alert-info">
+                    <strong>Goal:</strong> Create a systematic process where Nextek's dev team handles initial data analysis and CSV preparation, while data admin performs final Data Loader uploads.
                 </div>
 
-                <!-- Tab 2: Report Building -->
-                <div class="tab-content">
-                    <div class="section">
-                        <h2>Salesforce Report Building Fundamentals</h2>
-                        
-                        <div class="alert alert-warning">
-                            <strong>CRITICAL:</strong> All reports MUST be saved in the "BI Specific" folder in Salesforce. Do not save reports anywhere else in the system.
-                        </div>
+                <h3>Pipeline Workflow</h3>
+                <p><span class="step-number">1</span><strong>Salesforce Reporting:</strong> Run reports to identify data quality issues (save to "BI Specific" folder)</p>
+                <p><span class="step-number">2</span><strong>Duplicate Detection:</strong> Use SF tools and custom SOQL queries to find duplicates</p>
+                <p><span class="step-number">3</span><strong>Error Research:</strong> Investigate and categorize data inconsistencies using SOQL verification</p>
+                <p><span class="step-number">4</span><strong>CSV Preparation:</strong> Build clean, upload-ready CSV files with SOQL validation</p>
+                <p><span class="step-number">5</span><strong>Handoff:</strong> Package files for Data Loader upload with verification reports</p>
 
-                        <h3>Report Types Overview</h3>
-                        <div class="resource-card">
-                            <h4>Tabular Reports</h4>
-                            <p>Simple list format - best for data exports and basic analysis</p>
-                            <ul>
-                                <li>Fastest to create and run</li>
-                                <li>Good for CSV exports</li>
-                                <li>Limited grouping options</li>
-                                <li>Ideal for: Data exports, simple lists, record counts</li>
-                            </ul>
-                        </div>
+                <div class="alert alert-warning">
+                    <strong>FMO/IMO Specifics:</strong> These organizations primarily use Person objects in Salesforce, creating unique challenges with contact data, licensing information, and hierarchical relationships.
+                </div>
 
-                        <div class="resource-card">
-                            <h4>Summary Reports</h4>
-                            <p>Grouped data with subtotals - most versatile for analysis</p>
-                            <ul>
-                                <li>Up to 3 levels of grouping</li>
-                                <li>Subtotals and grand totals</li>
-                                <li>Chart compatibility</li>
-                                <li>Ideal for: Duplicate detection, trend analysis, dashboards</li>
-                            </ul>
-                        </div>
+                <div class="alert alert-success">
+                    <strong>Key Nextek Requirements:</strong><br>
+                    📁 <strong>ALL reports must be saved to "BI Specific" folder in Salesforce</strong><br>
+                    🔍 <strong>Use SOQL queries to verify data accuracy at every step</strong><br>
+                    📋 <strong>Document all verification steps in handoff materials</strong>
+                </div>
+            </div>
 
-                        <div class="checklist">
-                            <h4>Report Building Process</h4>
-                            <ul>
-                                <li>Navigate to Reports tab in Salesforce</li>
-                                <li>Click "New Report" button</li>
-                                <li>Select appropriate report type (object/relationship)</li>
-                                <li>Choose report format (Tabular/Summary/Matrix)</li>
-                                <li>Add fields to report (drag from left panel)</li>
-                                <li>Apply filters to narrow data scope</li>
-                                <li>Configure grouping and sorting</li>
-                                <li>Add formulas or summary fields if needed</li>
-                                <li>Preview and test with sample data</li>
-                                <li><strong>CRITICAL: Save ONLY to "BI Specific" folder in Salesforce</strong></li>
-                            </ul>
-                        </div>
+            <div class="section">
+                <h2>Key Data Objects</h2>
+                <div class="resource-card">
+                    <h4>Person Accounts</h4>
+                    <p>Individual agents, brokers, and producers with licensing and contact information</p>
+                </div>
+                <div class="resource-card">
+                    <h4>Accounts (Business)</h4>
+                    <p>Agencies, brokerages, and carrier relationships</p>
+                </div>
+                <div class="resource-card">
+                    <h4>Contacts</h4>
+                    <p>Support staff and administrative contacts</p>
+                </div>
+                <div class="resource-card">
+                    <h4>Custom Objects</h4>
+                    <p>Licensing, commissions, and product appointments</p>
+                </div>
+            </div>
+        </div>
 
-                        <h3>Data Verification with SOQL</h3>
-                        <div class="python-example">
+        <div id="report-basics" class="tab-content">
+            <div class="section">
+                <h2>Salesforce Report Building Fundamentals</h2>
+                
+                <h3>Report Types Overview</h3>
+                <div class="resource-card">
+                    <h4>Tabular Reports</h4>
+                    <p>Simple list format - best for data exports and basic analysis</p>
+                    <ul>
+                        <li>Fastest to create and run</li>
+                        <li>Good for CSV exports</li>
+                        <li>Limited grouping options</li>
+                        <li>Ideal for: Data exports, simple lists, record counts</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <h4>Summary Reports</h4>
+                    <p>Grouped data with subtotals - most versatile for analysis</p>
+                    <ul>
+                        <li>Up to 3 levels of grouping</li>
+                        <li>Subtotals and grand totals</li>
+                        <li>Chart compatibility</li>
+                        <li>Ideal for: Duplicate detection, trend analysis, dashboards</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <h4>Matrix Reports</h4>
+                    <p>Cross-tab format with row and column grouping</p>
+                    <ul>
+                        <li>Two-dimensional grouping</li>
+                        <li>Complex data relationships</li>
+                        <li>Advanced summarization</li>
+                        <li>Ideal for: Complex duplicate detection, cross-reference analysis</li>
+                    </ul>
+                </div>
+
+                <h3>Step-by-Step Report Creation</h3>
+                <div class="checklist">
+                    <h4>Report Building Process</h4>
+                    <ul>
+                        <li>Navigate to Reports tab in Salesforce</li>
+                        <li>Click "New Report" button</li>
+                        <li>Select appropriate report type (object/relationship)</li>
+                        <li>Choose report format (Tabular/Summary/Matrix)</li>
+                        <li>Add fields to report (drag from left panel)</li>
+                        <li>Apply filters to narrow data scope</li>
+                        <li>Configure grouping and sorting</li>
+                        <li>Add formulas or summary fields if needed</li>
+                        <li>Preview and test with sample data</li>
+                        <li><strong>CRITICAL: Save ONLY to "BI Specific" folder in Salesforce</strong></li>
+                        <li>Use descriptive naming convention</li>
+                    </ul>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>MANDATORY FOLDER REQUIREMENT:</strong> When clicking "Save" on ANY report, you MUST navigate to and select the "BI Specific" folder. Reports saved anywhere else will not comply with Nextek standards.
+                </div>
+
+                <h3>Data Verification with SOQL</h3>
+                <div class="alert alert-info">
+                    <strong>Best Practice:</strong> Always verify your report results using SOQL queries in Developer Console or Workbench to ensure data accuracy before proceeding with analysis.
+                </div>
+
+                <div class="python-example">
 <span class="comment"># Essential SOQL verification queries</span>
 
 <span class="string">Verify Total Record Count:</span>
@@ -453,24 +437,306 @@ SELECT COUNT() FROM Account WHERE IsPersonAccount = TRUE
 SELECT Id, Name, CreatedDate FROM Account 
 WHERE CreatedDate = TODAY AND IsPersonAccount = TRUE
 
+<span class="string">Validate Field Population:</span>
+SELECT COUNT() FROM Contact 
+WHERE Email != null AND Phone != null
+
 <span class="string">Cross-Reference Report Results:</span>
 SELECT Email, COUNT(Id) DupeCount FROM Contact 
 GROUP BY Email HAVING COUNT(Id) > 1
-                        </div>
+                </div>
+
+                <h3>Essential Report Types for FMO/IMO</h3>
+                
+                <div class="code-block">
+<strong>Person Accounts with Activities</strong>
+Primary Object: Accounts
+Secondary Object: Activities (Tasks & Events)
+Use Case: Track agent engagement and follow-up activities
+
+<strong>Contacts with Account Details</strong>
+Primary Object: Contacts  
+Secondary Object: Accounts
+Use Case: Contact management with agency information
+
+<strong>Opportunities with Contact Roles</strong>
+Primary Object: Opportunities
+Secondary Object: Contact Roles
+Use Case: Sales tracking and agent performance
+
+<strong>Cases with Contact Information</strong>
+Primary Object: Cases
+Secondary Object: Contacts
+Use Case: Support ticket analysis by agent/agency
+                </div>
+
+                <h3>Field Selection Best Practices</h3>
+                <div class="alert alert-info">
+                    <strong>Always Include These Fields:</strong>
+                    <ul>
+                        <li><strong>Record ID:</strong> Essential for updates and troubleshooting</li>
+                        <li><strong>Record Owner:</strong> For ownership analysis and assignment</li>
+                        <li><strong>Created Date/Modified Date:</strong> For timing and audit trails</li>
+                        <li><strong>Record Type:</strong> To distinguish between different object uses</li>
+                    </ul>
+                </div>
+
+                <h3>Filtering Techniques</h3>
+                <div class="python-example">
+<span class="comment"># Common filter patterns for FMO/IMO data</span>
+
+<span class="string">Date Filters:</span>
+Created Date equals THIS_MONTH
+Last Modified Date equals LAST_N_DAYS:7
+License Expiration Date equals NEXT_30_DAYS
+
+<span class="string">Text Filters:</span>
+Email contains "@gmail.com"
+Phone does not contain "555-0199"
+Last Name does not equal ""
+
+<span class="string">Picklist Filters:</span>
+Record Type equals "Producer"
+Status not equal to "Inactive"
+State/Province equals "CA;TX;FL"
+
+<span class="string">Boolean Filters:</span>
+Email Opt Out equals FALSE
+Person Account equals TRUE
+Do Not Call equals FALSE
+                </div>
+
+                <h3>Report Performance Optimization</h3>
+                <div class="alert alert-warning">
+                    <strong>Performance Tips:</strong>
+                    <ul>
+                        <li>Use selective filters to reduce record count</li>
+                        <li>Limit to essential fields only</li>
+                        <li>Avoid "not equal" filters when possible</li>
+                        <li>Use indexed fields in filters (ID, Email, Phone)</li>
+                        <li>Consider date ranges for large data sets</li>
+                        <li>Schedule large reports to run off-hours</li>
+                    </ul>
+                </div>
+
+                <h3>Nextek Report Saving Requirements</h3>
+                
+                <div class="alert alert-warning">
+                    <strong>CRITICAL:</strong> All reports MUST be saved in the "BI Specific" folder in Salesforce. Do not save reports anywhere else in the system.
+                </div>
+
+                <div class="checklist">
+                    <h4>Report Saving Process</h4>
+                    <ul>
+                        <li>Click "Save" button after creating report</li>
+                        <li>Navigate to "BI Specific" folder (required)</li>
+                        <li>Use naming convention: [Object]_[Purpose]_[Date/Frequency]</li>
+                        <li>Add descriptive report description</li>
+                        <li>Verify folder location before final save</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+<strong>Nextek Report Naming Examples:</strong>
+✅ Contacts_Duplicates_Weekly
+✅ PersonAccts_MissingData_Daily  
+✅ Agents_LicenseExpiring_Monthly
+✅ FMO_DataQuality_DataRecon2025
+
+<strong>Required Location:</strong>
+📁 BI Specific (ONLY acceptable folder)
+  └── All data reconciliation reports go here
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Why "BI Specific" Folder?</strong> This ensures all business intelligence and data quality reports are centralized for the Nextek team and maintains proper organization standards.
+                </div>
+            </div>
+        </div>
+
+        <div id="problem-reports" class="tab-content">
+            <div class="section">
+                <h2>Advanced Problem Detection Reports</h2>
+                
+                <h3>Duplicate Detection Reports</h3>
+                
+                <div class="resource-card">
+                    <h4>Email-Based Duplicate Detection</h4>
+                    <p><strong>Report Type:</strong> Contacts with Accounts (Summary)</p>
+                    <div class="code-block">
+<strong>Setup:</strong>
+1. Group by: Email (Primary Grouping)
+2. Group by: Full Name (Secondary Grouping)  
+3. Show: Record Count
+4. Filter: Email not equal to ""
+5. Filter: Show only groups where Record Count > 1
+<strong>Result:</strong> Shows all contacts sharing email addresses
                     </div>
                 </div>
 
-                <!-- Tab 3: Problem Detection -->
-                <div class="tab-content">
-                    <div class="section">
-                        <h2>Advanced Problem Detection Reports</h2>
-                        
-                        <div class="alert alert-warning">
-                            <strong>NEXTEK REQUIREMENT:</strong> All problem detection reports MUST be saved in the "BI Specific" folder.
-                        </div>
+                <div class="resource-card">
+                    <h4>Phone Number Duplicate Detection</h4>
+                    <p><strong>Report Type:</strong> Person Accounts (Matrix)</p>
+                    <div class="code-block">
+<strong>Setup:</strong>
+Row Grouping: Phone (formatted)
+Column Grouping: Record Type
+Show: Record Count, Last Name, First Name
+Filter: Phone not equal to ""
+Filter: Phone not contain "555-0199" (test numbers)
+<strong>Result:</strong> Cross-reference of phone duplicates by record type
+                    </div>
+                </div>
 
-                        <h3>SOQL-Based Problem Detection</h3>
-                        <div class="python-example">
+                <h3>Data Quality Monitoring Reports</h3>
+
+                <div class="resource-card">
+                    <h4>Missing Required Fields Report</h4>
+                    <div class="code-block">
+<strong>Person Accounts Missing Critical Data</strong>
+Report Type: Accounts (Tabular)
+Filters:
+- Is Person Account = TRUE
+- Record Type = "Producer" OR "Agent"
+- Last Name equals "" OR Email equals "" OR Phone equals ""
+Fields: Name, Email, Phone, Last Modified Date, Owner
+<strong>Purpose:</strong> Identify incomplete agent records needing data
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <h4>Invalid Email Format Detection</h4>
+                    <div class="code-block">
+<strong>Email Format Issues Report</strong>
+Report Type: Contacts (Summary)  
+Group by: Email
+Filters:
+- Email not equal to ""
+- Email not contain "@"
+OR
+- Email contains "@@"
+OR  
+- Email contains " " (space)
+<strong>Purpose:</strong> Find malformed email addresses for cleanup
+                    </div>
+                </div>
+
+                <h3>Relationship Integrity Reports</h3>
+
+                <div class="resource-card">
+                    <h4>Orphaned Records Detection</h4>
+                    <div class="code-block">
+<strong>Agents Without Parent Agency</strong>
+Report Type: Person Accounts (Tabular)
+Filters:
+- Is Person Account = TRUE
+- Record Type = "Producer"
+- Parent Account = ""
+Fields: Name, Email, Phone, Created Date, Owner
+<strong>Purpose:</strong> Find agents not properly linked to agencies
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <h4>Inactive Parent Account Check</h4>
+                    <div class="code-block">
+<strong>Agents Under Inactive Agencies</strong>
+Report Type: Person Accounts with Parent Account
+Filters:
+- Is Person Account = TRUE  
+- Parent Account: Active = FALSE
+Fields: Agent Name, Parent Account Name, Parent Status
+<strong>Purpose:</strong> Identify agents needing account reassignment
+                    </div>
+                </div>
+
+                <h3>Advanced Formula Fields for Detection</h3>
+
+                <div class="python-example">
+<span class="comment"># Custom formula examples for problem detection</span>
+
+<span class="string">Email Validation Formula:</span>
+AND(
+  NOT(ISBLANK(Email)),
+  CONTAINS(Email, "@"),
+  NOT(CONTAINS(Email, "@@")),
+  NOT(CONTAINS(Email, " "))
+)
+
+<span class="string">Phone Format Validation:</span>
+OR(
+  ISBLANK(Phone),
+  AND(
+    LEN(REGEX(Phone, "[0-9]", "g")) = 10,
+    NOT(CONTAINS(Phone, "555-0199"))
+  )
+)
+
+<span class="string">Name Completeness Check:</span>
+AND(
+  NOT(ISBLANK(FirstName)),
+  NOT(ISBLANK(LastName)),
+  LEN(FirstName) > 1,
+  LEN(LastName) > 1
+)
+                </div>
+
+                <h3>Time-Based Problem Detection</h3>
+
+                <div class="checklist">
+                    <h4>Temporal Analysis Reports</h4>
+                    <ul>
+                        <li><strong>Recent Data Issues:</strong> Problems in last 7 days</li>
+                        <li><strong>Stale Data Report:</strong> Records not updated in 90+ days</li>
+                        <li><strong>License Expiration:</strong> Expiring in next 30/60/90 days</li>
+                        <li><strong>Upload Failure Tracking:</strong> Failed imports by date</li>
+                        <li><strong>Duplicate Creation Trends:</strong> New duplicates over time</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+<strong>Stale Data Detection Report</strong>
+Report Type: Person Accounts (Summary)
+Group by: Last Modified Date (by Month)
+Filters:
+- Is Person Account = TRUE
+- Last Modified Date less than LAST_90_DAYS
+- Status not equal to "Inactive"
+Show: Record Count, Last Activity Date
+<strong>Purpose:</strong> Find accounts needing data refresh
+                </div>
+
+                <h3>Automated Problem Detection</h3>
+
+                <div class="alert alert-success">
+                    <strong>Report Scheduling Best Practices:</strong>
+                    <ul>
+                        <li><strong>Daily:</strong> Critical data quality checks (missing required fields)</li>
+                        <li><strong>Weekly:</strong> Duplicate detection and relationship integrity</li>
+                        <li><strong>Monthly:</strong> Comprehensive data audit and cleanup reports</li>
+                        <li><strong>Quarterly:</strong> Trend analysis and process improvement metrics</li>
+                    </ul>
+                </div>
+
+                <h3>Problem Report Dashboard</h3>
+                <div class="resource-card">
+                    <h4>Data Quality Dashboard Components</h4>
+                    <ul>
+                        <li><strong>Duplicate Count Gauge:</strong> Total duplicates trending</li>
+                        <li><strong>Missing Data Chart:</strong> Incomplete records by field</li>
+                        <li><strong>Error Rate Trend:</strong> Data quality over time</li>
+                        <li><strong>Upload Success Rate:</strong> Data loader performance</li>
+                        <li><strong>Top Problem Areas:</strong> Most common data issues</li>
+                        <li><strong>Resolution Time:</strong> Average time to fix issues</li>
+                    </ul>
+                </div>
+
+                <h3>SOQL-Based Problem Detection</h3>
+                <div class="alert alert-info">
+                    <strong>Best Practice:</strong> Use SOQL queries in addition to reports for comprehensive problem detection. SOQL provides more precise control and verification capabilities.
+                </div>
+
+                <div class="python-example">
 <span class="comment"># Advanced SOQL for comprehensive problem detection</span>
 
 <span class="string">Multi-Field Duplicate Detection:</span>
@@ -489,9 +755,43 @@ SELECT
   COUNT(LastName) as HasLastName
 FROM Contact
 WHERE RecordType.Name = 'Producer'
-                        </div>
 
-                        <div class="code-block">
+<span class="string">Relationship Integrity Check:</span>
+SELECT 
+  COUNT(CASE WHEN AccountId != null THEN 1 END) as WithAccount,
+  COUNT(CASE WHEN AccountId = null THEN 1 END) as Orphaned
+FROM Contact 
+WHERE RecordType.Name = 'Agent'
+
+<span class="string">Recent Data Quality Issues:</span>
+SELECT Id, Name, Email, Phone, CreatedDate
+FROM Contact 
+WHERE CreatedDate >= LAST_N_DAYS:7
+  AND (Email = null OR Phone = null OR LastName = null)
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>CRITICAL REMINDER:</strong> When you create any reports based on these SOQL findings, you MUST save them to the "BI Specific" folder in Salesforce. No other folder locations are acceptable.
+                </div>
+
+                <h3>Report Management and Saving</h3>
+                
+                <div class="alert alert-warning">
+                    <strong>NEXTEK REQUIREMENT:</strong> All problem detection reports MUST be saved in the "BI Specific" folder. This is mandatory for all data reconciliation work.
+                </div>
+
+                <div class="checklist">
+                    <h4>Problem Report Organization</h4>
+                    <ul>
+                        <li>Save ALL reports to "BI Specific" folder only</li>
+                        <li>Use prefix "DataQuality_" for problem detection reports</li>
+                        <li>Include date/frequency in report name</li>
+                        <li>Add clear description explaining the problem detected</li>
+                        <li>Schedule reports appropriately (daily/weekly/monthly)</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
 <strong>Problem Detection Report Names:</strong>
 ✅ DataQuality_EmailDuplicates_Daily
 ✅ DataQuality_MissingFields_Weekly  
@@ -501,34 +801,41 @@ WHERE RecordType.Name = 'Producer'
 <strong>Folder Location (REQUIRED):</strong>
 📁 BI Specific
   └── All problem detection reports here
-                        </div>
-                    </div>
+                </div>
+                <div class="alert alert-info">
+                    <strong>Export Best Practices:</strong>
+                    <ul>
+                        <li>Always include Record IDs for update operations</li>
+                        <li>Export with "Details" option to capture all field data</li>
+                        <li>Use UTF-8 encoding for special characters</li>
+                        <li>Include creation/modification timestamps</li>
+                        <li>Add owner information for assignment tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="reports" class="tab-content">
+            <div class="section">
+                <h2>Salesforce Reporting for Data Quality</h2>
+                
+                <h3>Essential Reports to Run</h3>
+                
+                <div class="checklist">
+                    <h4>Pre-Upload Assessment Reports</h4>
+                    <ul>
+                        <li>Duplicate Person Account Detection</li>
+                        <li>Missing Required Fields Report</li>
+                        <li>Invalid Email Format Report</li>
+                        <li>Incomplete Address Data</li>
+                        <li>Orphaned Records (no parent account)</li>
+                        <li>License Expiration Tracking</li>
+                        <li>Phone Number Format Issues</li>
+                    </ul>
                 </div>
 
-                <!-- Tab 4: SF Reporting -->
-                <div class="tab-content">
-                    <div class="section">
-                        <h2>Salesforce Reporting for Data Quality</h2>
-                        
-                        <div class="alert alert-warning">
-                            <strong>NEXTEK POLICY:</strong> All reports created for data reconciliation work MUST be saved in the "BI Specific" folder in Salesforce. No exceptions.
-                        </div>
-                        
-                        <h3>Essential Reports to Run</h3>
-                        <div class="checklist">
-                            <h4>Pre-Upload Assessment Reports</h4>
-                            <ul>
-                                <li>Duplicate Person Account Detection</li>
-                                <li>Missing Required Fields Report</li>
-                                <li>Invalid Email Format Report</li>
-                                <li>Incomplete Address Data</li>
-                                <li>Orphaned Records (no parent account)</li>
-                                <li>License Expiration Tracking</li>
-                                <li>Phone Number Format Issues</li>
-                            </ul>
-                        </div>
-
-                        <div class="code-block">
+                <h3>Creating Duplicate Detection Reports</h3>
+                <div class="code-block">
 <strong>Report Type:</strong> Person Accounts with Contacts
 <strong>Filters:</strong>
 - Created Date = LAST_N_DAYS:30 (adjust as needed)
@@ -538,35 +845,74 @@ WHERE RecordType.Name = 'Producer'
 - Full Name
 - Phone
 <strong>Display:</strong> Show records where count > 1
-                        </div>
-
-                        <div class="alert alert-info">
-                            <strong>Export Best Practices:</strong> Always export with Record IDs when planning updates. Use "Export Details" option to get all necessary fields for CSV preparation.
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Tab 5: Duplicate Detection -->
-                <div class="tab-content">
-                    <div class="section">
-                        <h2>Duplicate Detection Methods</h2>
+                <div class="alert alert-info">
+                    <strong>Pro Tip:</strong> Use matrix reports for complex duplicate detection across multiple fields simultaneously.
+                </div>
 
-                        <div class="alert alert-warning">
-                            <strong>Remember:</strong> Save all duplicate detection reports to the "BI Specific" folder in Salesforce when creating them through the Reports interface.
-                        </div>
+                <h3>Data Quality Dashboard Setup</h3>
+                <p>Create a dashboard with these key components:</p>
+                <ul>
+                    <li><strong>Records by Status:</strong> Track incomplete vs. complete records</li>
+                    <li><strong>Data Age Analysis:</strong> Identify stale data needing review</li>
+                    <li><strong>Error Trends:</strong> Monitor common data issues over time</li>
+                    <li><strong>Upload Success Rate:</strong> Track data loader success/failure ratios</li>
+                </ul>
 
-                        <h3>Advanced Duplicate Detection Query</h3>
-                        <div class="code-block">
-SELECT Email, FirstName, LastName, COUNT(Id) as DupeCount
+                <h3>Export Strategies and Report Management</h3>
+                <div class="alert alert-warning">
+                    <strong>NEXTEK POLICY:</strong> All reports created for data reconciliation work MUST be saved in the "BI Specific" folder in Salesforce. No exceptions.
+                </div>
+
+                <p><strong>Export Best Practices:</strong> Always export with Record IDs when planning updates. Use "Export Details" option to get all necessary fields for CSV preparation.</p>
+                
+                <div class="checklist">
+                    <h4>Report Saving Checklist</h4>
+                    <ul>
+                        <li>Create and test your report</li>
+                        <li>Click "Save" button</li>
+                        <li>Navigate to "BI Specific" folder (mandatory)</li>
+                        <li>Name using convention: [Object]_[Purpose]_[Frequency]</li>
+                        <li>Add meaningful description</li>
+                        <li>Set appropriate sharing permissions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="duplicates" class="tab-content">
+            <div class="section">
+                <h2>Duplicate Detection Methods</h2>
+
+                <h3>Salesforce Native Tools</h3>
+                <div class="resource-card">
+                    <h4>Duplicate Rules</h4>
+                    <p>Use Account and Contact duplicate rules to identify potential matches based on:</p>
+                    <ul>
+                        <li>Email address (exact match)</li>
+                        <li>First Name + Last Name + Phone</li>
+                        <li>SSN or Tax ID (if available)</li>
+                        <li>License numbers</li>
+                    </ul>
+                </div>
+
+                <h3>Advanced Duplicate Detection Query</h3>
+                <div class="code-block">
+<code>SELECT Email, FirstName, LastName, COUNT(Id) as DupeCount
 FROM Contact 
 WHERE Email != null 
 GROUP BY Email, FirstName, LastName 
 HAVING COUNT(Id) > 1
-ORDER BY DupeCount DESC
-                        </div>
+ORDER BY DupeCount DESC</code>
+                </div>
 
-                        <h3>SOQL Verification for Duplicate Detection</h3>
-                        <div class="python-example">
+                <h3>SOQL Verification for Duplicate Detection</h3>
+                <div class="alert alert-success">
+                    <strong>Critical Step:</strong> Always verify duplicate detection results with SOQL queries before creating CSVs. This ensures accuracy and prevents false positives.
+                </div>
+
+                <div class="python-example">
 <span class="comment"># SOQL queries to verify duplicate detection</span>
 
 <span class="string">Email Duplicates Verification:</span>
@@ -578,36 +924,85 @@ GROUP BY Email
 HAVING COUNT(Id) > 1
 ORDER BY RecordCount DESC
 
+<span class="string">Phone Duplicates Check:</span>
+SELECT Phone, COUNT(Id) as RecordCount,
+       MAX(Name) as SampleName  
+FROM Contact
+WHERE Phone != null AND Phone != ''
+GROUP BY Phone
+HAVING COUNT(Id) > 1
+
+<span class="string">Cross-Reference Person Accounts:</span>
+SELECT PersonEmail, COUNT(Id) as RecordCount
+FROM Account 
+WHERE IsPersonAccount = TRUE AND PersonEmail != null
+GROUP BY PersonEmail
+HAVING COUNT(Id) > 1
+
 <span class="string">Verify Record IDs for Updates:</span>
 SELECT Id, Email, Name FROM Contact 
 WHERE Email IN ('duplicate1@email.com', 'duplicate2@email.com')
-                        </div>
-
-                        <h3>FMO/IMO Specific Duplicate Scenarios</h3>
-                        <div class="alert alert-warning">
-                            <strong>Common Issues:</strong>
-                            <ul>
-                                <li>Same agent appears under multiple agencies</li>
-                                <li>Personal vs. business contact information conflicts</li>
-                                <li>Multiple license records for same individual</li>
-                                <li>Spelling variations in names (Bob vs. Robert)</li>
-                                <li>Multiple email addresses (personal/business)</li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Tab 6: Error Research -->
-                <div class="tab-content">
-                    <div class="section">
-                        <h2>Error Research and Investigation</h2>
+                <div class="alert alert-warning">
+                    <strong>Remember:</strong> Save all duplicate detection reports to the "BI Specific" folder in Salesforce when creating them through the Reports interface.
+                </div>
 
-                        <div class="alert alert-warning">
-                            <strong>Report Folder Reminder:</strong> Any reports created during error research must be saved to the "BI Specific" folder in Salesforce for proper organization and audit trails.
-                        </div>
+                <h3>FMO/IMO Specific Duplicate Scenarios</h3>
+                <div class="alert alert-warning">
+                    <strong>Common Issues:</strong>
+                    <ul>
+                        <li>Same agent appears under multiple agencies</li>
+                        <li>Personal vs. business contact information conflicts</li>
+                        <li>Multiple license records for same individual</li>
+                        <li>Spelling variations in names (Bob vs. Robert)</li>
+                        <li>Multiple email addresses (personal/business)</li>
+                    </ul>
+                </div>
 
-                        <h3>Investigation Workflow</h3>
-                        <div class="code-block">
+                <h3>Duplicate Resolution Process</h3>
+                <div class="checklist">
+                    <h4>Step-by-Step Resolution</h4>
+                    <ul>
+                        <li>Identify master record (most complete data)</li>
+                        <li>Document differences between duplicates</li>
+                        <li>Check for unique identifiers (SSN, License #)</li>
+                        <li>Review relationship history and activities</li>
+                        <li>Prepare merge or deletion CSV</li>
+                        <li>Flag for manual review if uncertain</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="errors" class="tab-content">
+            <div class="section">
+                <h2>Error Research and Investigation</h2>
+
+                <h3>Common Data Validation Errors</h3>
+                
+                <div class="resource-card">
+                    <h4>Format Validation Errors</h4>
+                    <ul>
+                        <li><strong>Email:</strong> Invalid format, missing @ symbol</li>
+                        <li><strong>Phone:</strong> Wrong length, invalid characters</li>
+                        <li><strong>ZIP Code:</strong> Invalid format for country</li>
+                        <li><strong>Date Fields:</strong> Future dates, invalid formats</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <h4>Required Field Violations</h4>
+                    <ul>
+                        <li>Missing Last Name on Person Accounts</li>
+                        <li>Empty Record Type assignments</li>
+                        <li>Missing Account ownership</li>
+                        <li>Incomplete license information</li>
+                    </ul>
+                </div>
+
+                <h3>Investigation Workflow</h3>
+                <div class="code-block">
 <strong>Error Analysis Steps:</strong>
 1. Export error report from Salesforce (save to "BI Specific" folder)
 2. Categorize errors by type and severity
@@ -617,10 +1012,14 @@ WHERE Email IN ('duplicate1@email.com', 'duplicate2@email.com')
 6. Prepare correction CSV with proper formatting
 7. Verify corrections with additional SOQL queries
 8. Test small batch before full upload
-                        </div>
+                </div>
 
-                        <h3>SOQL Verification for Error Research</h3>
-                        <div class="python-example">
+                <h3>SOQL Verification for Error Research</h3>
+                <div class="alert alert-info">
+                    <strong>Data Verification Essential:</strong> Use SOQL queries to validate error patterns and confirm corrections before creating CSV files. This prevents propagating data issues.
+                </div>
+
+                <div class="python-example">
 <span class="comment"># SOQL queries for error verification</span>
 
 <span class="string">Missing Required Fields Check:</span>
@@ -636,31 +1035,66 @@ WHERE Email != null
   AND (NOT Email LIKE '%@%' 
        OR Email LIKE '%@@%' 
        OR Email LIKE '% %')
-                        </div>
-                    </div>
+
+<span class="string">Phone Format Issues:</span>
+SELECT Id, Name, Phone FROM Contact
+WHERE Phone != null 
+  AND (LEN(Phone) < 10 OR LEN(Phone) > 15
+       OR Phone LIKE '%555-0199%')
+
+<span class="string">Orphaned Records Verification:</span>
+SELECT Id, Name, AccountId FROM Contact
+WHERE AccountId = null OR AccountId = ''
+
+<span class="string">Verify Fix Before Upload:</span>
+SELECT Id, Email FROM Contact 
+WHERE Id IN ('003XXXXXXX', '003YYYYYYY') <span class="comment"># IDs to be updated</span>
                 </div>
 
-                <!-- Tab 7: CSV Preparation -->
-                <div class="tab-content">
-                    <div class="section">
-                        <h2>CSV Preparation and Formatting</h2>
+                <div class="alert alert-warning">
+                    <strong>Report Folder Reminder:</strong> Any reports created during error research must be saved to the "BI Specific" folder in Salesforce for proper organization and audit trails.
+                </div>
 
-                        <h3>Data Loader CSV Requirements</h3>
-                        <div class="checklist">
-                            <h4>CSV Formatting Checklist</h4>
-                            <ul>
-                                <li>UTF-8 encoding to handle special characters</li>
-                                <li>Column headers match Salesforce API names</li>
-                                <li>Record IDs included for updates</li>
-                                <li>Date fields in YYYY-MM-DD format</li>
-                                <li>Boolean fields as TRUE/FALSE</li>
-                                <li>No line breaks within cells</li>
-                                <li>Escape commas in text fields</li>
-                            </ul>
-                        </div>
+                <h3>Error Logging Template</h3>
+                <div class="python-example">
+<span class="comment"># Error tracking structure</span>
+error_log = {
+    <span class="string">"record_id"</span>: <span class="string">"003XXXXXXXXXXXXXXX"</span>,
+    <span class="string">"error_type"</span>: <span class="string">"REQUIRED_FIELD_MISSING"</span>,
+    <span class="string">"field_name"</span>: <span class="string">"LastName"</span>,
+    <span class="string">"current_value"</span>: <span class="string">""</span>,
+    <span class="string">"proposed_fix"</span>: <span class="string">"Research from source system"</span>,
+    <span class="string">"severity"</span>: <span class="string">"HIGH"</span>,
+    <span class="string">"notes"</span>: <span class="string">"Agent import missing last name field"</span>
+}
+                </div>
 
-                        <h3>Python CSV Processing Script</h3>
-                        <div class="python-example">
+                <div class="alert alert-success">
+                    <strong>Best Practice:</strong> Always maintain an error log spreadsheet to track patterns and resolutions for future reference.
+                </div>
+            </div>
+        </div>
+
+        <div id="csv-prep" class="tab-content">
+            <div class="section">
+                <h2>CSV Preparation and Formatting</h2>
+
+                <h3>Data Loader CSV Requirements</h3>
+                <div class="checklist">
+                    <h4>CSV Formatting Checklist</h4>
+                    <ul>
+                        <li>UTF-8 encoding to handle special characters</li>
+                        <li>Column headers match Salesforce API names</li>
+                        <li>Record IDs included for updates</li>
+                        <li>Date fields in YYYY-MM-DD format</li>
+                        <li>Boolean fields as TRUE/FALSE</li>
+                        <li>No line breaks within cells</li>
+                        <li>Escape commas in text fields</li>
+                    </ul>
+                </div>
+
+                <h3>Python CSV Processing Script</h3>
+                <div class="python-example">
 <span class="keyword">import</span> pandas <span class="keyword">as</span> pd
 <span class="keyword">import</span> re
 <span class="keyword">from</span> datetime <span class="keyword">import</span> datetime
@@ -672,100 +1106,251 @@ WHERE Email != null
     <span class="comment"># Clean email addresses</span>
     df[<span class="string">'Email'</span>] = df[<span class="string">'Email'</span>].str.lower().str.strip()
     
+    <span class="comment"># Format phone numbers (US format)</span>
+    <span class="keyword">def</span> <span class="string">format_phone</span>(phone):
+        <span class="keyword">if</span> pd.isna(phone):
+            <span class="keyword">return</span> <span class="string">''</span>
+        clean = re.sub(<span class="string">r'[^\d]'</span>, <span class="string">''</span>, str(phone))
+        <span class="keyword">if</span> len(clean) == 10:
+            <span class="keyword">return</span> f<span class="string">'({clean[:3]}) {clean[3:6]}-{clean[6:]}'</span>
+        <span class="keyword">return</span> phone
+    
+    df[<span class="string">'Phone'</span>] = df[<span class="string">'Phone'</span>].apply(format_phone)
+    
+    <span class="comment"># Format names (Title Case)</span>
+    df[<span class="string">'FirstName'</span>] = df[<span class="string">'FirstName'</span>].str.title()
+    df[<span class="string">'LastName'</span>] = df[<span class="string">'LastName'</span>].str.title()
+    
+    <span class="comment"># Remove duplicates based on email</span>
+    df_clean = df.drop_duplicates(subset=[<span class="string">'Email'</span>], keep=<span class="string">'first'</span>)
+    
     <span class="comment"># Export for Data Loader</span>
     df_clean.to_csv(output_file, index=<span class="keyword">False</span>, encoding=<span class="string">'utf-8'</span>)
+    
+    <span class="keyword">print</span>(f<span class="string">"Processed {len(df)} records, output {len(df_clean)} clean records"</span>)
 
 <span class="comment"># Usage example</span>
 clean_salesforce_data(<span class="string">'raw_data.csv'</span>, <span class="string">'upload_ready.csv'</span>)
-                        </div>
-
-                        <div class="alert alert-warning">
-                            <strong>Important:</strong> Always include the Salesforce Record ID (15 or 18 characters) when preparing update CSVs. Save any validation reports to the "BI Specific" folder in Salesforce.
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Tab 8: Data Loader Handoff -->
-                <div class="tab-content">
-                    <div class="section">
-                        <h2>Data Loader Handoff Process</h2>
+                <h3>Alternative: Excel/Spreadsheet Method</h3>
+                <div class="code-block">
+<strong>Excel Formula Examples:</strong>
 
-                        <div class="alert alert-info">
-                            <strong>Report Folder Reminder:</strong> Ensure all supporting reports are saved in the "BI Specific" folder before handoff. This is required for audit trails and team collaboration.
-                        </div>
+Email Cleanup: =TRIM(LOWER(A2))
+Phone Format: =IF(LEN(SUBSTITUTE(B2," ",""))=10,
+   "("&LEFT(SUBSTITUTE(B2," ",""),3)&") "&
+   MID(SUBSTITUTE(B2," ",""),4,3)&"-"&
+   RIGHT(SUBSTITUTE(B2," ",""),4),B2)
+Name Title Case: =PROPER(TRIM(C2))
+                </div>
 
-                        <h3>Nextek Documentation Template</h3>
-                        <div class="code-block">
+                <h3>Field Mapping for FMO/IMO Data</h3>
+                <div class="resource-card">
+                    <h4>Person Account Required Fields</h4>
+                    <ul>
+                        <li><strong>LastName:</strong> Producer's last name</li>
+                        <li><strong>RecordTypeId:</strong> Producer/Agent record type</li>
+                        <li><strong>PersonEmail:</strong> Primary contact email</li>
+                        <li><strong>Phone:</strong> Business phone number</li>
+                        <li><strong>ParentId:</strong> Agency/FMO account relationship</li>
+                    </ul>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>Important:</strong> Always include the Salesforce Record ID (15 or 18 characters) when preparing update CSVs.
+                </div>
+            </div>
+        </div>
+
+        <div id="handoff" class="tab-content">
+            <div class="section">
+                <h2>Data Loader Handoff Process</h2>
+
+                <h3>Package Preparation</h3>
+                <div class="checklist">
+                    <h4>Handoff Package Checklist</h4>
+                    <ul>
+                        <li>Clean CSV file(s) ready for upload</li>
+                        <li>Data mapping document</li>
+                        <li>Error log and resolution notes</li>
+                        <li>Test results from sample upload</li>
+                        <li>Backup/rollback plan</li>
+                        <li>Record count summary</li>
+                    </ul>
+                </div>
+
+                <h3>Nextek Documentation Template</h3>
+                <div class="code-block">
 <strong>Nextek Data Upload Request</strong>
 Date: [Current Date]
 Prepared by: [Developer Name]
+Reviewed by: [QA Team Member]
 Operation Type: [Insert/Update/Upsert]
 Object: [Account/Contact/Person Account]
 Record Count: [Total Records]
 Client Source: [FMO/IMO Client Name]
+Reports Used: [Saved in BI Specific folder]
 
 <strong>Pre-Upload Validation:</strong>
-- All reports saved to "BI Specific" folder: [Y/N]
 - Duplicate check completed: [Y/N]
 - Required fields validated: [Y/N]
 - Format validation passed: [Y/N]
 - Test upload successful: [Y/N]
+- Nextek data standards verified: [Y/N]
+- All reports saved to "BI Specific" folder: [Y/N]
+
+<strong>Known Issues:</strong>
+[List any remaining issues or manual interventions needed]
+
+<strong>Rollback Plan:</strong>
+[Steps to reverse changes if needed]
+
+<strong>Reports Created:</strong>
+[List report names - all in BI Specific folder]
 
 <strong>Next Steps:</strong>
 [Handoff to data admin team]
-                        </div>
-
-                        <div class="checklist">
-                            <h4>Quality Assurance Steps</h4>
-                            <ul>
-                                <li>Sample Test: Upload 5-10 records first to validate mapping</li>
-                                <li>Field Verification: Confirm all fields populate correctly</li>
-                                <li>Relationship Check: Verify parent-child relationships maintained</li>
-                                <li>Duplicate Prevention: Final duplicate scan before full upload</li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Tab 9: Common Issues -->
-                <div class="tab-content">
-                    <div class="section">
-                        <h2>Common FMO/IMO Data Issues</h2>
-
-                        <h3>Person Object Challenges</h3>
-                        <div class="resource-card">
-                            <h4>Unique Identifier Conflicts</h4>
-                            <p><strong>Issue:</strong> Multiple agents with same SSN or license number</p>
-                            <p><strong>Resolution:</strong> Research with source system, may require manual verification</p>
-                            <p><strong>Prevention:</strong> Implement external ID fields for better tracking</p>
-                        </div>
-
-                        <div class="resource-card">
-                            <h4>Hierarchical Relationship Errors</h4>
-                            <p><strong>Issue:</strong> Agent assigned to non-existent agency account</p>
-                            <p><strong>Resolution:</strong> Create parent accounts first, then assign agents</p>
-                            <p><strong>Prevention:</strong> Use external IDs for parent account lookup</p>
-                        </div>
-
-                        <div class="alert alert-warning">
-                            <strong>Compliance Considerations:</strong>
-                            <ul>
-                                <li>FINRA registration validation</li>
-                                <li>State insurance licensing requirements</li>
-                                <li>Privacy regulations for personal data</li>
-                                <li>Appointment and contracting status</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="alert alert-info">
+                    <strong>Report Folder Reminder:</strong> Ensure all supporting reports are saved in the "BI Specific" folder before handoff. This is required for audit trails and team collaboration.
                 </div>
 
-                <!-- Tab 10: Resources -->
-                <div class="tab-content">
-                    <div class="section">
-                        <h2>Resources and References</h2>
+                <h3>Nextek Communication Protocol</h3>
+                <div class="alert alert-info">
+                    <strong>Slack/Email Template:</strong><br>
+                    "@nextek-datateam Ready for Data Loader upload:<br>
+                    📊 File: [filename.csv]<br>
+                    🎯 Object: Person Accounts<br>
+                    📈 Count: 1,247 records<br>
+                    ✅ Validation: Complete<br>
+                    ⚠️ Issues: 3 records flagged for manual review<br>
+                    📋 Documentation: Attached<br>
+                    🏢 Client: [FMO/IMO Name]"
+                </div>
 
-                        <h3>Quick Reference Commands</h3>
-                        <div class="code-block">
+                <h3>Quality Assurance Steps</h3>
+                <p><span class="step-number">1</span><strong>Sample Test:</strong> Upload 5-10 records first to validate mapping</p>
+                <p><span class="step-number">2</span><strong>Field Verification:</strong> Confirm all fields populate correctly</p>
+                <p><span class="step-number">3</span><strong>Relationship Check:</strong> Verify parent-child relationships maintained</p>
+                <p><span class="step-number">4</span><strong>Duplicate Prevention:</strong> Final duplicate scan before full upload</p>
+
+                <div class="alert alert-success">
+                    <strong>Success Metrics:</strong> Aim for 95%+ upload success rate with minimal manual intervention required.
+                </div>
+            </div>
+        </div>
+
+        <div id="common-issues" class="tab-content">
+            <div class="section">
+                <h2>Common FMO/IMO Data Issues</h2>
+
+                <h3>Person Object Challenges</h3>
+                <div class="resource-card">
+                    <h4>Unique Identifier Conflicts</h4>
+                    <p><strong>Issue:</strong> Multiple agents with same SSN or license number</p>
+                    <p><strong>Resolution:</strong> Research with source system, may require manual verification</p>
+                    <p><strong>Prevention:</strong> Implement external ID fields for better tracking</p>
+                </div>
+
+                <div class="resource-card">
+                    <h4>Hierarchical Relationship Errors</h4>
+                    <p><strong>Issue:</strong> Agent assigned to non-existent agency account</p>
+                    <p><strong>Resolution:</strong> Create parent accounts first, then assign agents</p>
+                    <p><strong>Prevention:</strong> Use external IDs for parent account lookup</p>
+                </div>
+
+                <div class="resource-card">
+                    <h4>License Data Inconsistencies</h4>
+                    <p><strong>Issue:</strong> Expired licenses, wrong states, missing appointment data</p>
+                    <p><strong>Resolution:</strong> Cross-reference with state licensing databases</p>
+                    <p><strong>Prevention:</strong> Implement validation rules and regular audits</p>
+                </div>
+
+                <h3>Financial Services Specific Problems</h3>
+                
+                <div class="alert alert-warning">
+                    <strong>Compliance Considerations:</strong>
+                    <ul>
+                        <li>FINRA registration validation</li>
+                        <li>State insurance licensing requirements</li>
+                        <li>Privacy regulations for personal data</li>
+                        <li>Appointment and contracting status</li>
+                    </ul>
+                </div>
+
+                <h3>Data Quality Patterns</h3>
+                <div class="python-example">
+<span class="comment"># Common data quality checks for FMO/IMO</span>
+quality_checks = {
+    <span class="string">"missing_license"</span>: <span class="string">"Producer missing license number"</span>,
+    <span class="string">"invalid_state"</span>: <span class="string">"License state doesn't match address"</span>,
+    <span class="string">"duplicate_agent"</span>: <span class="string">"Same agent under multiple agencies"</span>,
+    <span class="string">"orphaned_contact"</span>: <span class="string">"Agent not linked to parent agency"</span>,
+    <span class="string">"expired_appointment"</span>: <span class="string">"Carrier appointment expired"</span>,
+    <span class="string">"missing_hierarchy"</span>: <span class="string">"Agency relationship undefined"</span>
+}
+                </div>
+
+                <h3>Resolution Strategies</h3>
+                <div class="checklist">
+                    <h4>Quick Resolution Guide</h4>
+                    <ul>
+                        <li><strong>Missing Data:</strong> Flag for client follow-up, don't guess</li>
+                        <li><strong>Format Issues:</strong> Apply standard formatting rules</li>
+                        <li><strong>Duplicates:</strong> Research thoroughly before merging</li>
+                        <li><strong>Relationships:</strong> Create parent records before children</li>
+                        <li><strong>Compliance:</strong> When in doubt, consult compliance team</li>
+                    </ul>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Escalation Path:</strong> Technical issues → Dev team | Data quality → Data admin | Compliance → Legal/Compliance team
+                </div>
+            </div>
+        </div>
+
+        <div id="resources" class="tab-content">
+            <div class="section">
+                <h2>Resources and References</h2>
+
+                <h3>Salesforce Documentation</h3>
+                <div class="resource-card">
+                    <h4>Data Loader Resources</h4>
+                    <ul>
+                        <li>Salesforce Data Loader User Guide</li>
+                        <li>CSV file format requirements</li>
+                        <li>Field mapping best practices</li>
+                        <li>Error handling and troubleshooting</li>
+                    </ul>
+                    <button class="btn">Access Trailhead</button>
+                </div>
+
+                <div class="resource-card">
+                    <h4>Person Accounts Documentation</h4>
+                    <ul>
+                        <li>Person Account setup and configuration</li>
+                        <li>B2C vs B2B considerations</li>
+                        <li>Record type management</li>
+                        <li>Relationship mapping</li>
+                    </ul>
+                    <button class="btn btn-secondary">View Documentation</button>
+                </div>
+
+                <h3>Python Libraries for Data Processing</h3>
+                <div class="python-example">
+<span class="comment"># Essential libraries for Salesforce data work</span>
+<span class="keyword">import</span> pandas <span class="keyword">as</span> pd          <span class="comment"># Data manipulation</span>
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np           <span class="comment"># Numerical operations</span>
+<span class="keyword">import</span> re                    <span class="comment"># Regular expressions</span>
+<span class="keyword">import</span> simple_salesforce     <span class="comment"># SF API integration</span>
+<span class="keyword">import</span> fuzzywuzzy           <span class="comment"># Fuzzy string matching</span>
+<span class="keyword">import</span> openpyxl             <span class="comment"># Excel file handling</span>
+                </div>
+
+                <h3>Quick Reference Commands</h3>
+                <div class="code-block">
 <strong>Duplicate Detection SOQL:</strong>
 SELECT Email, COUNT(Id) FROM Contact GROUP BY Email HAVING COUNT(Id) > 1
 
@@ -774,38 +1359,124 @@ SELECT Id, Name, PersonEmail, Phone FROM Account WHERE IsPersonAccount = TRUE
 
 <strong>Recent Records:</strong>
 SELECT Id, Name, CreatedDate FROM Account WHERE CreatedDate = TODAY
-                        </div>
+                </div>
 
-                        <h3>Nextek Support Contacts</h3>
-                        <div class="alert alert-success">
-                            <strong>Internal Support:</strong><br>
-                            📧 Data Team: data-team@nextek.com<br>
-                            💬 Slack: #data-reconciliation<br>
-                            📞 Internal Extension: [Your Extension]<br>
-                            📋 Ticket System: [Internal Help Desk URL]
-                        </div>
+                <h3>Nextek Support Contacts</h3>
+                <div class="alert alert-success">
+                    <strong>Internal Support:</strong><br>
+                    📧 Data Team: data-team@nextek.com<br>
+                    💬 Slack: #data-reconciliation<br>
+                    📞 Internal Extension: [Your Extension]<br>
+                    📋 Ticket System: [Internal Help Desk URL]<br><br>
+                    <strong>Salesforce Resources:</strong><br>
+                    🌐 Nextek Salesforce Org: [Your Org URL]<br>
+                    📖 Internal Wiki: [Knowledge Base URL]
+                </div>
 
-                        <h3>Python Libraries for Data Processing</h3>
-                        <div class="python-example">
-<span class="comment"># Essential libraries for Salesforce data work</span>
-<span class="keyword">import</span> pandas <span class="keyword">as</span> pd          <span class="comment"># Data manipulation</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np           <span class="comment"># Numerical operations</span>
-<span class="keyword">import</span> re                    <span class="comment"># Regular expressions</span>
-<span class="keyword">import</span> simple_salesforce     <span class="comment"># SF API integration</span>
-                        </div>
-
-                        <h3>Nextek Training Schedule</h3>
-                        <div class="resource-card">
-                            <h4>Upcoming Training Sessions</h4>
-                            <p><strong>Data Reconciliation Kickoff:</strong> Thursday, [This Week]</p>
-                            <p><strong>Advanced Python for Data Processing:</strong> Next Week</p>
-                            <p><strong>FMO/IMO Business Rules Deep Dive:</strong> Monthly Review</p>
-                            <button class="btn">Register for Training</button>
-                        </div>
-                    </div>
+                <h3>Nextek Training Schedule</h3>
+                <div class="resource-card">
+                    <h4>Upcoming Training Sessions</h4>
+                    <p><strong>Data Reconciliation Kickoff:</strong> Thursday, [This Week]</p>
+                    <p><strong>Advanced Python for Data Processing:</strong> Next Week</p>
+                    <p><strong>FMO/IMO Business Rules Deep Dive:</strong> Monthly Review</p>
+                    <p><strong>Salesforce Best Practices:</strong> Quarterly Team Session</p>
+                    <button class="btn">Register for Training</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function showTab(event, tabName) {
+            // Prevent default behavior
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            // Hide all tab contents
+            const contents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove('active');
+            }
+            
+            // Remove active class from all tabs
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // Show selected tab content
+            const selectedContent = document.getElementById(tabName);
+            if (selectedContent) {
+                selectedContent.classList.add('active');
+            }
+            
+            // Add active class to clicked tab
+            const clickedTab = event ? event.target : event;
+            if (clickedTab && clickedTab.classList) {
+                clickedTab.classList.add('active');
+            } else {
+                // Fallback: find the tab by content
+                for (let i = 0; i < tabs.length; i++) {
+                    if (tabs[i].onclick && tabs[i].onclick.toString().includes(tabName)) {
+                        tabs[i].classList.add('active');
+                        break;
+                    }
+                }
+            }
+            
+            return false;
+        }
+
+        // Alternative method for environments where onclick doesn't work
+        function initializeTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(function(tab, index) {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get tab name from onclick attribute as fallback
+                    const onclickAttr = this.getAttribute('onclick');
+                    if (onclickAttr) {
+                        const match = onclickAttr.match(/showTab\(event,\s*'([^']+)'\)/);
+                        if (match) {
+                            showTab(e, match[1]);
+                        }
+                    }
+                });
+            });
+        }
+
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize tabs with both methods for maximum compatibility
+            initializeTabs();
+            
+            // Add click handlers to checklist items
+            const checklistItems = document.querySelectorAll('.checklist li');
+            checklistItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    if (this.style.textDecoration === 'line-through') {
+                        this.style.textDecoration = 'none';
+                        this.style.opacity = '1';
+                    } else {
+                        this.style.textDecoration = 'line-through';
+                        this.style.opacity = '0.6';
+                    }
+                });
+            });
+            
+            // Ensure the overview tab is active on load
+            showTab(null, 'overview');
+        });
+
+        // Fallback for browsers that don't support addEventListener
+        if (typeof window !== 'undefined' && !window.addEventListener) {
+            window.attachEvent('onload', function() {
+                initializeTabs();
+            });
+        }
+    </script>
 </body>
 </html>
